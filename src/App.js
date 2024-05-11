@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import TasksPage from './pages/TasksPage';
+import NotesPage from './pages/NotesPage'; 
 
 const App = () => {
   return (
@@ -8,7 +9,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Navigate to="/tasks" replace />} />
         <Route path="/tasks" element={<TasksPage />} />
-        {/* Agregar más rutas según sea necesario */}
+        <Route path="/notes" element={<NotesPage />} /> 
       </Routes>
     </Router>
   );
