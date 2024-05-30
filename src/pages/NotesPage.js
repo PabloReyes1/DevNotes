@@ -13,19 +13,20 @@ const NotesPage = () => {
     localStorage.setItem('notes', JSON.stringify(notes));
   }, [notes]);
 
-  const addNote = (content, isTaskList, tasks) => {
+  const addNote = (note) => {
     const newNote = {
       id: 'note' + (notes.length + 1),
-      content,
-      isTaskList,
-      tasks
+      title: note.title,
+      description: note.description,
+      isTaskList: note.isTaskList,
+      tasks: note.tasks
     };
     setNotes([...notes, newNote]);
   };
 
-  const editNote = (id, newContent, newTasks) => {
+  const editNote = (id, updatedNote) => {
     const updatedNotes = notes.map(note =>
-      note.id === id ? { ...note, content: newContent, tasks: newTasks } : note
+      note.id === id ? { ...note, ...updatedNote } : note
     );
     setNotes(updatedNotes);
   };

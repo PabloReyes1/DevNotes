@@ -2,38 +2,33 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 
 const AddNoteModal = ({ isOpen, onClose, addNote }) => {
-  const [noteContent, setNoteContent] = useState('');
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [isTaskList, setIsTaskList] = useState(false);
   const [tasks, setTasks] = useState([{ content: '', done: false }]);
-
-  const handleNoteChange = (e) => {
-    setNoteContent(e.target.value);
-  };
-
-  const handleTaskListToggle = () => {
-    setIsTaskList(!isTaskList);
-    setTasks([{ content: '', done: false }]);
-  };
-
-  const handleTaskChange = (index, value) => {
-    const updatedTasks = tasks.map((task, i) => 
-      i === index ? { ...task, content: value } : task
-    );
-    setTasks(updatedTasks);
-  };
 
   const handleAddTask = () => {
     setTasks([...tasks, { content: '', done: false }]);
   };
 
+  const handleTaskContentChange = (index, value) => {
+    const updatedTasks = tasks.map((task, i) =>
+      i === index ? { ...task, content: value } : task
+    );
+    setTasks(updatedTasks);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isTaskList) {
-      addNote(noteContent, isTaskList, tasks);
-    } else {
-      addNote(noteContent, isTaskList, []);
-    }
-    setNoteContent('');
+    addNote({
+      title,
+      description,
+      isTaskList,
+      tasks: isTaskList ? tasks.filter(task => task.content.trim()) : []
+    });
+    setTitle('');
+    setDescription('');
+    setIsTaskList(false);
     setTasks([{ content: '', done: false }]);
     onClose();
   };
@@ -43,14 +38,16 @@ const AddNoteModal = ({ isOpen, onClose, addNote }) => {
       <h2>Add New Note</h2>
       <form onSubmit={handleSubmit}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <label htmlFor="noteContent">Note Content:</label>
-          <textarea name="noteContent" value={noteContent} onChange={handleNoteChange} placeholder="Enter note content" style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ddd' }} />
+          <label htmlFor="noteTitle">Title:</label>
+          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Note title" style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ddd' }} />
+          <label htmlFor="noteDescription">Description:</label>
+          <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Note description" style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ddd' }} />
           <label>
-            <input type="checkbox" checked={isTaskList} onChange={handleTaskListToggle} /> Is this a task list?
+            <input type="checkbox" checked={isTaskList} onChange={(e) => setIsTaskList(e.target.checked)} /> Is this a task list?
           </label>
           {isTaskList && tasks.map((task, index) => (
             <div key={index} style={{ display: 'flex', alignItems: 'center', margin: '5px' }}>
-              <input type="text" value={task.content} onChange={(e) => handleTaskChange(index, e.target.value)} placeholder="Task description" style={{ flexGrow: 1, padding: '5px' }} />
+              <input type="text" value={task.content} onChange={(e) => handleTaskContentChange(index, e.target.value)} placeholder="Task description" style={{ flexGrow: 1, padding: '5px' }} />
             </div>
           ))}
           {isTaskList && <button type="button" onClick={handleAddTask} style={{ padding: '5px', backgroundColor: '#3F51B5', color: 'white', borderRadius: '5px', cursor: 'pointer', margin: '5px' }}>Add Task</button>}
