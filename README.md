@@ -1,70 +1,70 @@
-# Getting Started with Create React App
+# Notes and Task Lists Manager
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este proyecto es una aplicación web para gestionar notas y listas de tareas. La aplicación permite crear, editar y eliminar notas y listas de tareas, así como establecer recordatorios.
 
-## Available Scripts
+## Requisitos
 
-In the project directory, you can run:
+- Node.js (versión 12 o superior)
+- npm (Node Package Manager)
 
-### `npm start`
+## Instrucciones para levantar la aplicación
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Sigue estos pasos para levantar y ejecutar la aplicación en tu máquina local.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Paso 1: Clonar el repositorio
 
-### `npm test`
+Clona el repositorio de GitHub en tu máquina local. Abre una terminal y ejecuta el siguiente comando:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+git clone <URL_DEL_REPOSITORIO>
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Paso 2: Navegar al directorio del proyecto
+Cambia al directorio del proyecto clonado:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+cd <NOMBRE_DEL_REPOSITORIO>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Paso 3: Instalar dependencias
+Instala las dependencias del proyecto utilizando npm:
 
-### `npm run eject`
+npm install
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Paso 4: Ejecutar la aplicación
+Una vez que se hayan instalado todas las dependencias, puedes iniciar la aplicación con el siguiente comando:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+npm start
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Esto abrirá la aplicación en tu navegador predeterminado en http://localhost:3000.
 
-## Learn More
+Estructura del Proyecto:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+src/: Directorio principal del código fuente
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+components/: Contiene los componentes reutilizables de la aplicación
+AddNoteModal.js: Componente para agregar notas y listas de tareas
+EditNoteModal.js: Componente para editar notas y listas de tareas
+NoteCard.js: Componente para representar una nota
+TaskListCard.js: Componente para representar una lista de tareas
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+pages/: Contiene las páginas principales de la aplicación
+NotesPage.js: Página principal para gestionar notas y listas de tareas
+App.js: Componente principal de la aplicación
+index.js: Punto de entrada de la aplicación
+NotesPage.css: Estilos específicos para la página de notas
+NoteCard.css: Estilos específicos para las tarjetas de notas y listas de tareas
+EditNoteModal.css: Estilos específicos para el modal de edición
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Descripción de la Funcionalidad:
 
-### Making a Progressive Web App
+Agregar Nota: Puedes agregar una nueva nota utilizando el botón "Add Note". Se abrirá un modal donde podrás ingresar el título, descripción y un recordatorio opcional.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Agregar Lista de Tareas: Puedes agregar una nueva lista de tareas utilizando el botón "Add Task List". Se abrirá un modal donde podrás ingresar el título, descripción, tareas y un recordatorio opcional.
 
-### Advanced Configuration
+Editar Nota/Lista de Tareas: Puedes editar una nota o lista de tareas haciendo clic en la tarjeta correspondiente. Se abrirá un modal donde podrás editar los detalles.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Eliminar Nota/Lista de Tareas: Puedes eliminar una nota o lista de tareas desde el modal de edición.
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Marcar Tareas como Completadas: Puedes marcar las tareas como completadas haciendo clic en el checkbox correspondiente en la tarjeta de la lista de tareas.
