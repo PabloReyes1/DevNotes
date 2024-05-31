@@ -3,8 +3,9 @@ import NoteCard from '../components/NoteCard';
 import TaskListCard from '../components/TaskListCard';
 import AddNoteModal from '../components/AddNoteModal';
 import EditNoteModal from '../components/EditNoteModal';
+import VoiceNoteModal from '../components/VoiceNoteModal';
 import Modal from 'react-modal';
-import './NotesPage.css'; // Importa el archivo CSS
+import './NotesPage.css';
 
 Modal.setAppElement('#root');
 
@@ -45,6 +46,7 @@ const NotesPage = () => {
   const [notes, setNotes] = useState(() => JSON.parse(localStorage.getItem('notes')) || initialNotes);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false);
   const [selectedNote, setSelectedNote] = useState(null);
   const [isTaskList, setIsTaskList] = useState(false);
 
@@ -71,12 +73,16 @@ const NotesPage = () => {
       title: note.title,
       description: note.description,
       isTaskList: isTaskList,
-      tasks: note.tasks,
+      tasks: note.tasks || [], // Asegúrate de que tasks esté inicializado
       reminder: note.reminder,
-      createdDate: new Date().toLocaleString('en-GB', { hour12: false })
+      createdDate: new Date().toLocaleString('en-GB', { hour12: false }),
+      tags: note.tags || [],
+      category: note.category || 'General',
+      format: note.format || 'richtext',
     };
     setNotes([...notes, newNote]);
   };
+  
 
   const editNote = (id, updatedNote) => {
     const updatedNotes = notes.map(note =>
@@ -115,17 +121,37 @@ const NotesPage = () => {
   };
   const closeEditModal = () => setIsEditModalOpen(false);
 
+  const openVoiceModal = () => setIsVoiceModalOpen(true);
+  const closeVoiceModal = () => setIsVoiceModalOpen(false);
+
+  const addVoiceNote = (voiceNote) => {
+    const newNote = {
+      id: 'note' + (notes.length + 1),
+      title: voiceNote.title,
+      description: '',
+      isTaskList: false,
+      tasks: [],
+      reminder: null,
+      createdDate: voiceNote.createdDate,
+      tags: [],
+      audioURL: voiceNote.audioURL
+    };
+    setNotes([...notes, newNote]);
+  };
+
   return (
     <div className="content">
-      <h1 style={{ textAlign: 'center', color: '#5C6BC0' }}>DevNotes</h1>
+      <h1 style={{ textAlign: 'center', color: '#5C6BC0' }}>Notes Manager</h1>
       <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
         <button onClick={() => openAddModal(false)} style={{ margin: '10px', padding: '10px 20px', backgroundColor: '#3F51B5', color: 'white', borderRadius: '5px', cursor: 'pointer' }}>Add Note</button>
         <button onClick={() => openAddModal(true)} style={{ margin: '10px', padding: '10px 20px', backgroundColor: '#3F51B5', color: 'white', borderRadius: '5px', cursor: 'pointer' }}>Add Task List</button>
+        <button onClick={openVoiceModal} style={{ margin: '10px', padding: '10px 20px', backgroundColor: '#3F51B5', color: 'white', borderRadius: '5px', cursor: 'pointer' }}>Add Voice Note</button>
       </div>
       <AddNoteModal isOpen={isAddModalOpen} onClose={closeAddModal} addNote={addNote} isTaskList={isTaskList} />
       {selectedNote && (
         <EditNoteModal isOpen={isEditModalOpen} onClose={closeEditModal} note={selectedNote} editNote={editNote} deleteNote={deleteNote} />
       )}
+      <VoiceNoteModal isOpen={isVoiceModalOpen} onClose={closeVoiceModal} addVoiceNote={addVoiceNote} />
       <div className="notes-container">
         {notes.map(note => (
           note.isTaskList ? 

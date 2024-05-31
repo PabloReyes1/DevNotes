@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import './EditNoteModal.css'; // Importa el archivo CSS para los estilos
+import { WithContext as ReactTags } from 'react-tag-input';
+import './EditNoteModal.css';
+import RichTextEditor from './RichTextEditor';
 
 const EditNoteModal = ({ isOpen, onClose, note, editNote, deleteNote }) => {
   const [editTitle, setEditTitle] = useState(note.title);
   const [editDescription, setEditDescription] = useState(note.description);
   const [editTasks, setEditTasks] = useState(note.tasks);
   const [reminder, setReminder] = useState(note.reminder);
+  const [tags, setTags] = useState(note.tags || []);
+  const [category, setCategory] = useState(note.category || 'General'); // Default category
 
   const handleTitleChange = (e) => {
     setEditTitle(e.target.value);
-  };
-
-  const handleDescriptionChange = (e) => {
-    setEditDescription(e.target.value);
   };
 
   const handleTaskContentChange = (index, value) => {
@@ -35,9 +35,19 @@ const EditNoteModal = ({ isOpen, onClose, note, editNote, deleteNote }) => {
       title: editTitle,
       description: editDescription,
       tasks: editTasks,
-      reminder
+      reminder,
+      tags,
+      category
     });
     onClose();
+  };
+
+  const handleDeleteTag = (i) => {
+    setTags(tags.filter((tag, index) => index !== i));
+  };
+
+  const handleAdditionTag = (tag) => {
+    setTags([...tags, tag]);
   };
 
   return (
@@ -50,7 +60,7 @@ const EditNoteModal = ({ isOpen, onClose, note, editNote, deleteNote }) => {
         <label htmlFor="noteTitle">Title:</label>
         <input type="text" value={editTitle} onChange={handleTitleChange} placeholder="Note title" style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ddd' }} />
         <label htmlFor="noteDescription">Description:</label>
-        <textarea value={editDescription} onChange={handleDescriptionChange} placeholder="Note description" style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ddd' }} />
+        <RichTextEditor content={editDescription} onChange={setEditDescription} />
         {note.isTaskList && editTasks.map((task, index) => (
           <div key={index} style={{ display: 'flex', alignItems: 'center', margin: '5px' }}>
             <input type="checkbox" checked={task.done} onChange={() => handleTaskToggle(index)} style={{ marginRight: '10px' }} />
@@ -59,6 +69,20 @@ const EditNoteModal = ({ isOpen, onClose, note, editNote, deleteNote }) => {
         ))}
         <label htmlFor="noteReminder">Reminder:</label>
         <input type="datetime-local" value={reminder} onChange={(e) => setReminder(e.target.value)} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ddd' }} />
+        <label htmlFor="tags">Tags:</label>
+        <ReactTags
+          tags={tags}
+          handleDelete={handleDeleteTag}
+          handleAddition={handleAdditionTag}
+          allowUnique={true}
+          placeholder="Add a tag"
+        />
+        <label htmlFor="category">Category:</label>
+        <select value={category} onChange={(e) => setCategory(e.target.value)} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ddd' }}>
+          <option value="General">General</option>
+          <option value="Work">Work</option>
+          <option value="Personal">Personal</option>
+        </select>
         <button onClick={handleEditSave} style={{ margin: '5px', backgroundColor: '#4CAF50', color: 'white', padding: '10px', borderRadius: '5px', cursor: 'pointer' }}>Save</button>
         <button onClick={() => deleteNote(note.id)} style={{ margin: '5px', backgroundColor: '#F44336', color: 'white', padding: '10px', borderRadius: '5px', cursor: 'pointer' }}>Delete</button>
       </div>
