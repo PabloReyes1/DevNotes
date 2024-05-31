@@ -1,5 +1,6 @@
 import React from 'react';
-import './NoteCard.css'; // Importa el archivo CSS para los estilos
+import './NoteCard.css';
+import ReactMarkdown from 'react-markdown';
 
 const NoteCard = ({ note, openEditModal }) => {
   const handleCardClick = () => {
@@ -10,7 +11,11 @@ const NoteCard = ({ note, openEditModal }) => {
     <div className="note-card" onClick={handleCardClick}>
       <div className="note-timestamp">{note.createdDate}</div>
       <h3>{note.title}</h3>
-      {note.description && <p>{note.description}</p>}
+      {note.format === 'markdown' ? (
+        <ReactMarkdown>{note.description}</ReactMarkdown>
+      ) : (
+        <p>{note.description}</p>
+      )}
       {note.reminder && <p>Reminder: {new Date(note.reminder).toLocaleString()}</p>}
     </div>
   );

@@ -1,30 +1,23 @@
-/* WorkspaceSelector.css */
-
 .workspace-container {
   display: flex;
-  height: 100vh;
 }
 
 .sidebar {
   width: 200px;
-  background: #f4f4f4;
-  color: #333;
-  padding: 20px;
-  position: fixed; /* Fija la barra lateral */
+  background-color: #f8f9fa;
+  height: 100vh;
+  position: fixed;
   top: 0;
-  bottom: 0;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  left: 0;
+  padding-top: 20px;
 }
 
 .sidebar-link {
-  display: flex;
-  align-items: center;
+  display: block;
+  padding: 10px 20px;
   color: #333;
   text-decoration: none;
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 5px;
-  transition: background-color 0.3s;
+  font-size: 18px;
 }
 
 .sidebar-link:hover {
@@ -36,30 +29,7 @@
 }
 
 .content {
-  margin-left: 220px; /* Espacio suficiente para la barra lateral */
+  margin-left: 220px; /* Ajusta esto según el ancho de la barra lateral */
   padding: 20px;
-  flex-grow: 1;
-  background-color: #f0f0f0;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-}
-
-.notes-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px; /* Espacio entre las notas */
-  justify-content: flex-start;
-}
-
-.note-card {
-  padding: 20px;
-  margin: 10px;
-  background-color: #e3f2fd;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  width: 300px; /* Ajuste del ancho de las notas */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex: 1;
 }
