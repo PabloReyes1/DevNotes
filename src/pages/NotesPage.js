@@ -141,11 +141,11 @@ const NotesPage = () => {
 
   return (
     <div className="content">
-      <h1 style={{ textAlign: 'center', color: '#5C6BC0' }}>Notes Manager</h1>
+      <h1 style={{ textAlign: 'center', color: '#5C6BC0' }}>DevNotes</h1>
       <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
-        <button onClick={() => openAddModal(false)} style={{ margin: '10px', padding: '10px 20px', backgroundColor: '#3F51B5', color: 'white', borderRadius: '5px', cursor: 'pointer' }}>Add Note</button>
-        <button onClick={() => openAddModal(true)} style={{ margin: '10px', padding: '10px 20px', backgroundColor: '#3F51B5', color: 'white', borderRadius: '5px', cursor: 'pointer' }}>Add Task List</button>
-        <button onClick={openVoiceModal} style={{ margin: '10px', padding: '10px 20px', backgroundColor: '#3F51B5', color: 'white', borderRadius: '5px', cursor: 'pointer' }}>Add Voice Note</button>
+        <button onClick={() => openAddModal(false)} className="note-button">Add Note</button>
+        <button onClick={() => openAddModal(true)} className="note-button">Add Task List</button>
+        <button onClick={openVoiceModal} className="note-button">Add Voice Note</button>
       </div>
       <AddNoteModal isOpen={isAddModalOpen} onClose={closeAddModal} addNote={addNote} isTaskList={isTaskList} />
       {selectedNote && (
