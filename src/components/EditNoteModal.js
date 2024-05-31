@@ -45,11 +45,13 @@ const EditNoteModal = ({ isOpen, onClose, note, editNote, deleteNote }) => {
       isTaskList: note.isTaskList,
     });
     onClose();
+    window.location.reload();
   };
 
   const handleDelete = () => {
     deleteNote(note.id);
     onClose();
+    window.location.reload();
   };
 
   return (

@@ -52,6 +52,7 @@ const AddNoteModal = ({ isOpen, onClose, addNote, isTaskList }) => {
     setCategory('General');
     setFormat('richtext');
     onClose();
+    window.location.reload();
   };
 
   return (
