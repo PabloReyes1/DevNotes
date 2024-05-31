@@ -5,11 +5,10 @@ import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
 
-
 const initialTasks = {
-  'todo': [{ id: 't1', content: 'Task 1', description: 'Complete the initial setup.', state: 'todo' }],
-  'inProgress': [{ id: 't2', content: 'Task 2', description: 'Work on the main feature.', state: 'inProgress' }],
-  'done': [{ id: 't3', content: 'Task 3', description: 'Finalize the project.', state: 'done' }]
+  'todo': [{ id: 't1', content: 'Task 1', description: 'Complete the initial setup.', state: 'todo', timer: { active: false, duration: 0 } }],
+  'inProgress': [{ id: 't2', content: 'Task 2', description: 'Work on the main feature.', state: 'inProgress', timer: { active: false, duration: 0 } }],
+  'done': [{ id: 't3', content: 'Task 3', description: 'Finalize the project.', state: 'done', timer: { active: false, duration: 0 } }]
 };
 
 const TasksPage = () => {
@@ -46,7 +45,7 @@ const TasksPage = () => {
 
   const addTask = (content, state, description) => {
     const newId = 't' + (Object.keys(tasks.todo).length + Object.keys(tasks.inProgress).length + Object.keys(tasks.done).length + 1);
-    const newTask = { id: newId, content, state, description };
+    const newTask = { id: newId, content, state, description, timer: { active: false, duration: 0 } };
     setTasks({
       ...tasks,
       [state]: [...tasks[state], newTask]
@@ -63,7 +62,7 @@ const TasksPage = () => {
           break;
         }
       }
-      newTasks[newState] = [...newTasks[newState], { id, content: newContent, state: newState, description: newDescription }];
+      newTasks[newState] = [...newTasks[newState], { id, content: newContent, state: newState, description: newDescription, timer: { active: false, duration: 0 } }];
       return newTasks;
     });
   };
@@ -83,7 +82,7 @@ const TasksPage = () => {
 
   return (
     <div style={{ padding: '20px', minHeight: '100vh', backgroundColor: '#f0f0f0' }}>
-      <h1 style={{ textAlign: 'center', color: '#5C6BC0' }}>Task Board</h1>
+      <h1 style={{ textAlign: 'center', color: '#5C6BC0' }}>DevTasks</h1>
       <button onClick={openModal} style={{ margin: '10px', padding: '10px', backgroundColor: '#3F51B5', color: 'white', borderRadius: '5px', cursor: 'pointer' }}>Add Task</button>
       <Modal isOpen={isModalOpen} onRequestClose={closeModal} style={{ content: { top: '50%', left: '50%', right: 'auto', bottom: 'auto', marginRight: '-50%', transform: 'translate(-50%, -50%)', width: '300px', padding: '20px', borderRadius: '10px', backgroundColor: '#fff' } }}>
         <h2>Add New Task</h2>
